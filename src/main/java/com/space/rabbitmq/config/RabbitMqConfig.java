@@ -8,15 +8,13 @@ import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * RabbitMq配置
- * @author zhuzhe
- * @date 2018/5/25 13:37
- * @email 1529949535@qq.com
  */
 @Configuration
 public class RabbitMqConfig {
@@ -69,16 +67,19 @@ public class RabbitMqConfig {
      * 当有消息到达时会通知监听在对应的队列上的监听对象
      * @return
      */
-    /*@Bean
+    @Bean
     public SimpleMessageListenerContainer simpleMessageListenerContainer_one(){
         SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer(connectionFactory);
+        //序列化，也可以不配置，默认使用JDK,实现序列化
+        simpleMessageListenerContainer.setMessageConverter(new Jackson2JsonMessageConverter());
         simpleMessageListenerContainer.addQueues(queueConfig.firstQueue());
+        simpleMessageListenerContainer.addQueues(queueConfig.secondQueue());
         simpleMessageListenerContainer.setExposeListenerChannel(true);
         simpleMessageListenerContainer.setMaxConcurrentConsumers(5);
         simpleMessageListenerContainer.setConcurrentConsumers(1);
-        simpleMessageListenerContainer.setAcknowledgeMode(AcknowledgeMode.MANUAL); //设置确认模式手工确认
+        simpleMessageListenerContainer.setAcknowledgeMode(AcknowledgeMode.NONE); //设置确认模式自动启动模式
         return simpleMessageListenerContainer;
-    }*/
+    }
 
     /**
      * 自定义rabbit template用于数据的接收和发送
@@ -101,8 +102,6 @@ public class RabbitMqConfig {
          * 可针对每次请求的消息去确定’mandatory’的boolean值，
          * 只能在提供’return -callback’时使用，与mandatory互斥
          */
-        template.setReturnCallback(msgSendReturnCallback());
-        template.setMandatory(true);
         return template;
     }
 

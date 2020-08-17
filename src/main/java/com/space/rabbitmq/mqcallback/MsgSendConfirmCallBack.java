@@ -5,9 +5,6 @@ import org.springframework.amqp.rabbit.support.CorrelationData;
 
 /**
  * 消息发送到交换机确认机制
- * @author zhuzhe
- * @date 2018/5/25 15:53
- * @email 1529949535@qq.com
  */
 public class MsgSendConfirmCallBack implements RabbitTemplate.ConfirmCallback {
 
