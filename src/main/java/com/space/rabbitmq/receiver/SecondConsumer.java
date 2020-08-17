@@ -10,9 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecondConsumer {
 
-    @RabbitListener(queues = {"first-queue","second-queue"})
+    /**
+     *类内传输消息类型为org.springframework.amqp.core.Message;
+     */
+    @RabbitListener(queues = {"second-queue"})
     public void handleMessage(Message message) throws Exception {
         // 处理消息
-        System.out.println("SecondConsumer {} handleMessage :"+message);
+        System.out.println("SecondConsumer {} handleMessage :" + message);
     }
 }
