@@ -18,6 +18,7 @@ public class FirstConsumer {
      * queues  指定从哪个队列（queue）订阅消息
      * 队列内的信息为封装类信息
      * @param message
+     * 参数message是项目实体类Message
      */
     @RabbitListener(queues = {"first-queue"})
     public void handleMessage(Message message) {

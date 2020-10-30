@@ -12,6 +12,7 @@ public class SecondConsumer {
 
     /**
      *类内传输消息类型为org.springframework.amqp.core.Message;
+     * @Message 参数为amqp.core.Message
      */
     @RabbitListener(queues = {"second-queue"})
     public void handleMessage(Message message) throws Exception {
